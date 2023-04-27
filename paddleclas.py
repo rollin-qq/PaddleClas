@@ -311,7 +311,7 @@ def init_config(model_type, model_name, inference_model_dir, **kwargs):
 
     return cfg
 
-
+#非常好用的一个函数
 def args_cfg():
     def str2bool(v):
         return v.lower() in ("true", "t", "1")
@@ -394,8 +394,8 @@ def args_cfg():
         action='append',
         default=[],
         help='config options to be overridden')
-    args = parser.parse_args()
-    return vars(args)
+    args = parser.parse_args()                                          #这是一个使用Python标准库中的argparse模块来解析命令行参数的函数。调用parser.parse_args()将会解析命令行参数，并返回一个包含所有参数值的命名空间对象（Namespace）。这个命名空间对象可以通过点号.来访问各个参数的值。例如，如果有一个参数名为"foo"，那么就可以通过args.foo来获取它的值。
+    return vars(args)                                                   #转换为字典对象
 
 
 def print_info():
@@ -788,6 +788,7 @@ def main():
     print_info()
     cfg = args_cfg()
     clas_engine = PaddleClas(**cfg)
+    #根据配置字典中的"build_gallery"参数的值来判断是否需要构建图库（即对输入图片进行特征提取和保存），如果不需要，则调用PaddleClas引擎对象的"predict"方法对指定的测试图片进行预测，并将预测结果打印出来。
     if cfg["build_gallery"] == False:
         res = clas_engine.predict(
             cfg["infer_imgs"],
